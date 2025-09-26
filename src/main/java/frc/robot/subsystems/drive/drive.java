@@ -81,8 +81,8 @@ public class drive extends SubsystemBase {
     @Override
     public void periodic() {
         poseEstimator.update(
-            this.io.getRotation2d(), 
-            this.io.getModulePositions());
+                this.io.getRotation2d(),
+                this.io.getModulePositions());
     }
 
 }

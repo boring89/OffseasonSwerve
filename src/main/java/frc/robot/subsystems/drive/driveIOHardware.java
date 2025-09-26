@@ -10,8 +10,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.lib.Swerve.Module.Module;
 
-public class driveIOHardware implements driveIO{
-    
+public class driveIOHardware implements driveIO {
+
     private final Module FL, FR, BL, BR;
     private final AHRS gyro;
 
@@ -47,29 +47,28 @@ public class driveIOHardware implements driveIO{
     @Override
     public SwerveModuleState[] getModuleStates() {
         return new SwerveModuleState[] {
-            FL.getState(), 
-            FR.getState(),
-            BL.getState(),
-            BR.getState()
+                FL.getState(),
+                FR.getState(),
+                BL.getState(),
+                BR.getState()
         };
     }
 
     @Override
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
-            FL.getPosition(), 
-            FR.getPosition(), 
-            BL.getPosition(), 
-            BR.getPosition()
+                FL.getPosition(),
+                FR.getPosition(),
+                BL.getPosition(),
+                BR.getPosition()
         };
     }
 
     @Override
     public void setModuleStates(SwerveModuleState[] state) {
         SwerveDriveKinematics.desaturateWheelSpeeds(
-            state, 
-            DriveConstants.kMaxSpeedMeterPerSecond
-        );
+                state,
+                DriveConstants.kMaxSpeedMeterPerSecond);
 
         FL.setDesiredState(state[0]);
         FR.setDesiredState(state[1]);

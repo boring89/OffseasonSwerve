@@ -9,15 +9,11 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkFlexConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import frc.robot.Configs;
 import frc.robot.Constants.DriveConstants;
@@ -39,8 +35,8 @@ public class Module {
         this.drive = new SparkFlex(DriveConstants.kDriveMotorID[ModuleId], MotorType.kBrushless);
         this.turn = new SparkMax(DriveConstants.kTurnMotorID[ModuleId], MotorType.kBrushless);
 
-        this.drive.configure(Configs.drivingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        this.turn.configure(Configs.turningConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        this.drive.configure(Configs.drivingConfig.inverted(ModuleReverse), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        this.turn.configure(Configs.turningConfig.inverted(true), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         this.driveEncoder = drive.getEncoder();
         this.turnEncoder = turn.getEncoder();

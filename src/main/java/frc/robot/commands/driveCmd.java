@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.drive.drive;
 
@@ -33,9 +34,9 @@ public class driveCmd extends Command {
         double yOutput = ySpd.get();
         double rotOutput = rotSpd.get();
 
-        xOutput = Math.abs(xOutput) > OIConstants.kDeadband ? xOutput : 0.0;
-        yOutput = Math.abs(yOutput) > OIConstants.kDeadband ? yOutput : 0.0;
-        rotOutput = Math.abs(rotOutput) > OIConstants.kDeadband ? rotOutput : 0.0;
+        xOutput = applyDeadband(xOutput) * DriveConstants.kMaxSpeedMeterPerSecond;
+        yOutput = applyDeadband(yOutput) * DriveConstants.kMaxSpeedMeterPerSecond;
+        rotOutput = applyDeadband(rotOutput) * DriveConstants.kMaxAngularSpeedRadiansPerSecond;
 
         if (xOutput == 0 && yOutput == 0 && rotOutput == 0) {
             this.drive.stop();
@@ -45,5 +46,9 @@ public class driveCmd extends Command {
             drive.runVelocity(chassisSpeeds);
         }
 
+    }
+
+    public double applyDeadband(double Speed) {
+        return Math.abs(Speed) > OIConstants.kDeadband ? Speed : 0.0;
     }
 }

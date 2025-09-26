@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.lib.Swerve.ModuleLimits;
 
@@ -35,10 +34,10 @@ public final class Constants {
     public static final int[] kCANcoderID = { 9, 10, 11, 12 };
 
     public static final Translation2d[] moduleLocations = new Translation2d[] {
-      new Translation2d(0.278, 0.278),
-      new Translation2d(0.278, -0.278),
-      new Translation2d(-0.278, 0.278),
-      new Translation2d(-0.278, -0.278)
+        new Translation2d(0.278, 0.278),
+        new Translation2d(0.278, -0.278),
+        new Translation2d(-0.278, 0.278),
+        new Translation2d(-0.278, -0.278)
     };
 
     public static final ModuleLimits moduleLimitsFree = new ModuleLimits(kMaxSpeedMeterPerSecond,

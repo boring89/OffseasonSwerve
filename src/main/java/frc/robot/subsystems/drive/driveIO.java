@@ -5,17 +5,25 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public interface driveIO {
-    //gyro
+    // gyro
     void zeroHeading();
+
     Rotation2d getRotation2d();
+
     double getHeading();
+
     double getTurnRate();
-    //mooduleState
+
+    // mooduleState
     SwerveModuleState[] getModuleStates();
+
     SwerveModulePosition[] getModulePositions();
+
     void setModuleStates(SwerveModuleState[] state);
-    //encoders
+
+    // encoders
     void resetEncoders();
+
     void stopModules();
 
 }
