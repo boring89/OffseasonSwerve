@@ -18,7 +18,7 @@ public interface VisionIO {
         return "";
     }
 
-    default void setThrottle(int throttleValue) {};
+    default void setThrottleValue(int throttleValue) {}
 
     @AutoLog
     public class  VisionIOInputs {

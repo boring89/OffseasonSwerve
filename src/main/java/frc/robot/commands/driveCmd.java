@@ -4,8 +4,8 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
+import frc.robot.constants.Constants.DriveConstants;
+import frc.robot.constants.Constants.OIConstants;
 import frc.robot.subsystems.drive.drive;
 
 public class driveCmd extends Command {

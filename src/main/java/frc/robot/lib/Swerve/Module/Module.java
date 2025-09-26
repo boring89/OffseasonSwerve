@@ -16,7 +16,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Configs;
-import frc.robot.Constants.DriveConstants;
+import frc.robot.constants.Constants.DriveConstants;
 
 public class Module {
 
