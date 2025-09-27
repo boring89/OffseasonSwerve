@@ -13,9 +13,9 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTablesJNI;
-import frc.robot.RobotState;
 import frc.robot.configs.CameraConfiguration;
 import frc.robot.constants.FieldConstants;
+import frc.robot.RobotState;
 
 import org.littletonrobotics.junction.Logger;
 

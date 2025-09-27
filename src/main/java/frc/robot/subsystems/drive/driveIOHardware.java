@@ -16,10 +16,10 @@ public class driveIOHardware implements driveIO {
     private final AHRS gyro;
 
     public driveIOHardware() {
-        this.FL = new Module(0, false);
-        this.FR = new Module(1, true);
-        this.BL = new Module(2, false);
-        this.BR = new Module(3, true);
+        this.FL = new Module(0, true);
+        this.FR = new Module(1, false);
+        this.BL = new Module(2, true);
+        this.BR = new Module(3, false);
 
         this.gyro = new AHRS(NavXComType.kMXP_SPI);
     }
@@ -31,7 +31,7 @@ public class driveIOHardware implements driveIO {
 
     @Override
     public double getHeading() {
-        return this.gyro.getAngle();
+        return -this.gyro.getAngle();
     }
 
     @Override

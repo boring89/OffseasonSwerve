@@ -8,8 +8,10 @@ import edu.wpi.first.math.geometry.Translation3d;
 public class CameraConfiguration {
     
     public enum Location {
-        FL,
-        FR,
+        FRONT_LEFT,
+        FRONT_RIGHT,
+        BACK_LEFT,
+        BACK_RIGHT,
         NONE
     }
 

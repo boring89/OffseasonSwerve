@@ -7,6 +7,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.DriveConstants;
 import frc.robot.lib.Swerve.SwerveSetpoint;
@@ -21,6 +23,8 @@ public class drive extends SubsystemBase {
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(DriveConstants.moduleLocations);
 
     private final SwerveSetpointGenerator swerveSetpointGenerator;
+
+    private final Field2d field = new Field2d();
 
     private SwerveSetpoint currentSetpoint = new SwerveSetpoint(
             new ChassisSpeeds(),
@@ -46,12 +50,14 @@ public class drive extends SubsystemBase {
                 DriveConstants.moduleLocations);
 
         io.zeroHeading();
-
+        io.resetEncoders();
     }
 
     public void runVelocity(ChassisSpeeds speeds) {
 
-        ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
+        ChassisSpeeds fieldSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, io.getRotation2d());
+
+        ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(fieldSpeeds, 0.02);
 
         SwerveModuleState[] SetPointStatesUnoptimized = kinematics.toSwerveModuleStates(discreteSpeeds);
 
@@ -83,6 +89,12 @@ public class drive extends SubsystemBase {
         poseEstimator.update(
                 this.io.getRotation2d(),
                 this.io.getModulePositions());
+
+        field.setRobotPose(this.poseEstimator.getEstimatedPosition());
+
+        SmartDashboard.putData("field", field);
+
+        SmartDashboard.putNumber("heading", io.getHeading());
     }
 
 }

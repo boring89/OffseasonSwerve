@@ -28,7 +28,7 @@ public final class Constants {
 
   public static class DriveConstants {
 
-    public static final double kMaxSpeedMeterPerSecond = 4;
+    public static final double kMaxSpeedMeterPerSecond = 5;
     public static final double kMaxAngularSpeedRadiansPerSecond = 3 * 1.8 * Math.PI;
 
     public static final double kMaxAccerationUnitsPerSecond = 7;

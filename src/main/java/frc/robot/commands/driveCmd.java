@@ -38,13 +38,9 @@ public class driveCmd extends Command {
         yOutput = applyDeadband(yOutput) * DriveConstants.kMaxSpeedMeterPerSecond;
         rotOutput = applyDeadband(rotOutput) * DriveConstants.kMaxAngularSpeedRadiansPerSecond;
 
-        if (xOutput == 0 && yOutput == 0 && rotOutput == 0) {
-            this.drive.stop();
-        } else {
-            ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xOutput, yOutput, rotOutput);
+        ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xOutput, yOutput, rotOutput);
 
-            drive.runVelocity(chassisSpeeds);
-        }
+        drive.runVelocity(chassisSpeeds);
 
     }
 

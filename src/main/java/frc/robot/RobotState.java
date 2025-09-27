@@ -33,6 +33,28 @@ public class RobotState {
                                                                                                                                            // which
                                                                                                                                            // side
 
+    public void addVisionObservation(AprilTagObservation... observations) {
+        aprilTagObservations.clear();
+
+        for (var observation : observations) {
+            if ((observation.location() == CameraConfiguration.Location.FRONT_LEFT
+                    || observation.location() == CameraConfiguration.Location.FRONT_RIGHT)) {
+                if (observation.tagId == getValidTagIDsFromClosest60DegreeRotation().FRONT_ID) {
+                    this.scoringDirection = Constants.SuperstructureConstants.ScoringDirection.FRONT;
+                }
+            } else if ((observation.location() == CameraConfiguration.Location.BACK_LEFT
+                    || observation.location() == CameraConfiguration.Location.BACK_RIGHT)) {
+                if (observation.tagId == getValidTagIDsFromClosest60DegreeRotation().BACK_ID) {
+                    this.scoringDirection = Constants.SuperstructureConstants.ScoringDirection.BACK;
+                }
+            }
+
+            Logger.recordOutput("RobotState/ScoringDirection", scoringDirection);
+
+            aprilTagObservations.add(observation);
+        }
+    }
+
     public record AprilTagObservation(
             String cameraName, CameraConfiguration.Location location, int tagId, Pose2d robotPoseFromCamera) {
     }
@@ -45,7 +67,7 @@ public class RobotState {
         this.robotChassisSpeeds = observation.robotSpeeds;
     }
 
-    //return Observations
+    // return Observations
     public List<AprilTagObservation> getAprilTagObservations() {
         return aprilTagObservations;
     }
@@ -75,7 +97,6 @@ public class RobotState {
         Logger.recordOutput("RobotState/ValidTagIdsFromRotation/BackID", ids.BACK_ID);
         return ids;
     }
-
 
     // find the closest angle : to aim reef
     public Rotation2d getClosest60Degrees() {
@@ -134,7 +155,6 @@ public class RobotState {
         }
         return pairToReturn;
     }
-
 
     // find closest Reef apriltag id
     public int getClosestTagId() {
