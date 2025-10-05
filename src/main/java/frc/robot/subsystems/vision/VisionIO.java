@@ -22,7 +22,6 @@ public interface VisionIO {
 
     @AutoLog
     public class  VisionIOInputs {
-    
         public boolean hasTarget = false;
         public Rotation2d horizontalAngleToTarget = new Rotation2d();
         public int tagId = -1;

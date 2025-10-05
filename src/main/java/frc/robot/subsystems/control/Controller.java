@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class Controller extends XboxController {
     
-    public Controller() {
-        super(0);
+    public Controller(int port) {
+        super(port);
     }
 
     public Trigger zeroHeading() {

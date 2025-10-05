@@ -25,26 +25,30 @@ public class driveIOHardware implements driveIO {
     }
 
     @Override
+    public void updateInputs(driveIOInputs inputs) {
+        inputs.gyroheading = getRotation2d();
+        inputs.gyroTurnRate = getTurnRate();
+        inputs.moduleStates = getModuleStates();
+        inputs.modulePositions = getModulePositions();
+    }
+
+    @Override
     public void zeroHeading() {
         this.gyro.reset();
     }
 
-    @Override
     public double getHeading() {
         return -this.gyro.getAngle();
     }
 
-    @Override
     public Rotation2d getRotation2d() {
         return Rotation2d.fromDegrees(this.getHeading());
     }
 
-    @Override
     public double getTurnRate() {
         return gyro.getRate();
     }
 
-    @Override
     public SwerveModuleState[] getModuleStates() {
         return new SwerveModuleState[] {
                 FL.getState(),
@@ -53,8 +57,7 @@ public class driveIOHardware implements driveIO {
                 BR.getState()
         };
     }
-
-    @Override
+ 
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
                 FL.getPosition(),
@@ -65,7 +68,7 @@ public class driveIOHardware implements driveIO {
     }
 
     @Override
-    public void setModuleStates(SwerveModuleState[] state) {
+    public void swerveOutput(SwerveModuleState[] state) {
         SwerveDriveKinematics.desaturateWheelSpeeds(
                 state,
                 DriveConstants.kMaxSpeedMeterPerSecond);
@@ -77,7 +80,7 @@ public class driveIOHardware implements driveIO {
     }
 
     @Override
-    public void stopModules() {
+    public void stop() {
         FL.Stop();
         FR.Stop();
         BL.Stop();
@@ -91,5 +94,4 @@ public class driveIOHardware implements driveIO {
         BL.resetEncoders();
         BR.resetEncoders();
     }
-
 }

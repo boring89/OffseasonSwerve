@@ -6,32 +6,22 @@ package frc.robot.constants;
 
 import java.util.Map;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import frc.robot.lib.Swerve.ModuleLimits;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean
- * constants. This class should not be used for any other purpose. All constants
- * should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
 
   public static class DriveConstants {
 
-    public static final double kMaxSpeedMeterPerSecond = 5;
+    public static final double kMaxSpeedMeterPerSecond = 2;
     public static final double kMaxAngularSpeedRadiansPerSecond = 3 * 1.8 * Math.PI;
 
-    public static final double kMaxAccerationUnitsPerSecond = 7;
+    public static final double kMaxAccerationUnitsPerSecond = 5;
 
     public static final int[] kDriveMotorID = { 1, 2, 3, 4 };
     public static final int[] kTurnMotorID = { 5, 6, 7, 8 };
@@ -66,6 +56,16 @@ public final class Constants {
   public static final class OIConstants {
     public static final double kDeadband = 0.05;
   }
+
+  public static final class TagConstants {
+    public static final AprilTagFieldLayout FIELD_LAYOUT =  AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+  }
+
+
+
+
+
+
 
   // from 2910's code
   public static final class SuperstructureConstants {
