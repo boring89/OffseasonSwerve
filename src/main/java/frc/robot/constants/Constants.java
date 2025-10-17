@@ -27,6 +27,8 @@ public final class Constants {
     public static final int[] kTurnMotorID = { 5, 6, 7, 8 };
     public static final int[] kCANcoderID = { 9, 10, 11, 12 };
 
+    public static final boolean[] kModuleReversed = { false, true, false, true };
+
     public static final Translation2d[] moduleLocations = new Translation2d[] {
         new Translation2d(0.278, 0.278),
         new Translation2d(0.278, -0.278),

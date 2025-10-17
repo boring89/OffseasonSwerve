@@ -1,16 +1,13 @@
 package frc.robot.subsystems.drive;
 
 import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,8 +22,6 @@ public class drive extends SubsystemBase {
 
     private final SwerveDrivePoseEstimator poseEstimator;
 
-    private final Field2d field;
-
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(DriveConstants.moduleLocations);
 
     private final SwerveSetpointGenerator swerveSetpointGenerator;
@@ -35,15 +30,11 @@ public class drive extends SubsystemBase {
 
     private Rotation2d yaw;
 
-    private SwerveSetpoint currentSetpoint = new SwerveSetpoint(
-            new ChassisSpeeds(),
-            new SwerveModuleState[] {
-                    new SwerveModuleState(),
-                    new SwerveModuleState(),
-                    new SwerveModuleState(),
-                    new SwerveModuleState()
-            });
-
+    private SwerveSetpoint currentSetpoint = new SwerveSetpoint(new ChassisSpeeds(), new SwerveModuleState[] {
+            new SwerveModuleState(),
+            new SwerveModuleState(),
+            new SwerveModuleState(),
+            new SwerveModuleState() });
 
     private final driveIOInputs inputs = new driveIOInputs();
 
@@ -60,10 +51,7 @@ public class drive extends SubsystemBase {
                 initialPose);
 
         this.swerveSetpointGenerator = new SwerveSetpointGenerator(
-                this.kinematics,
-                DriveConstants.moduleLocations);
-
-        this.field = new Field2d();
+                this.kinematics, DriveConstants.moduleLocations);
 
         io.zeroHeading();
         io.resetEncoders();
@@ -72,9 +60,7 @@ public class drive extends SubsystemBase {
     public void runVelocity(ChassisSpeeds speeds) {
 
         ChassisSpeeds fieldSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, inputs.gyroheading);
-
         ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(fieldSpeeds, 0.02);
-
         SwerveModuleState[] SetPointStatesUnoptimized = kinematics.toSwerveModuleStates(discreteSpeeds);
 
         currentSetpoint = swerveSetpointGenerator.generateSetpoint(
@@ -106,7 +92,6 @@ public class drive extends SubsystemBase {
 
     public Command resetHeading() {
         return runOnce(() -> this.zeroHeading());
-
     }
 
     public void addVisionMeasurement(Pose2d pose) {
@@ -115,24 +100,16 @@ public class drive extends SubsystemBase {
 
     @Override
     public void periodic() {
+        io.updateInputs(inputs);
 
-        poseEstimator.update(
-                inputs.gyroheading,
-                inputs.modulePositions);
+        poseEstimator.update(inputs.gyroheading, inputs.modulePositions);
 
-        double[] pose = {
-                poseEstimator.getEstimatedPosition().getX(),
-                poseEstimator.getEstimatedPosition().getY(),
-                Math.toRadians(inputs.gyroheading.getDegrees())
-        };
+        double[] pose = { poseEstimator.getEstimatedPosition().getX(), poseEstimator.getEstimatedPosition().getY(),
+                Math.toRadians(inputs.gyroheading.getDegrees()) };
 
         SmartDashboard.putNumberArray("PhotonPose", PhotonPose);
-
         SmartDashboard.putNumberArray("Pose", pose);
-
         SmartDashboard.putNumber("heading", inputs.gyroheading.getDegrees());
-
         SmartDashboard.putNumber("turnRate", inputs.gyroTurnRate);
     }
-
 }

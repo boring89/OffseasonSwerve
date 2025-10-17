@@ -61,7 +61,6 @@ public class ModuleIOSpark extends ModuleIO {
 
     @Override
     public void setModuleState(SwerveModuleState state) {
-
         state = ModuleIO.optimizeState(state, inputs.turnPosition);
         drivePIDController.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
         turnPIDController.setReference(state.angle.getRadians(), ControlType.kPosition);

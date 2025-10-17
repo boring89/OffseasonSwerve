@@ -2,30 +2,37 @@ package frc.robot.subsystems.drive;
 
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.constants.Constants.DriveConstants;
-import frc.robot.lib.Swerve.Module.Module;
+import frc.robot.lib.Swerve.Module.ModuleIO;
+import frc.robot.lib.Swerve.Module.ModuleIO.ModuleIOInputs;
+import frc.robot.lib.Swerve.Module.ModuleIOSpark;
 
 public class driveIOHardware implements driveIO {
 
-    private final Module FL, FR, BL, BR;
+    private final ModuleIO[] modules = new ModuleIO[4];
+    private final ModuleIOInputs[] moduleInputs = new ModuleIOInputs[4];
     private final AHRS gyro;
 
     public driveIOHardware() {
-        this.FL = new Module(0, true);
-        this.FR = new Module(1, false);
-        this.BL = new Module(2, true);
-        this.BR = new Module(3, false);
-
+        for (int i = 0; i < 4; i++) {
+            this.moduleInputs[i] = new ModuleIOInputs();
+            this.modules[i] = new ModuleIOSpark(i, DriveConstants.kModuleReversed[i]);
+            this.modules[i].updateInputs(moduleInputs[i]);
+        }
         this.gyro = new AHRS(NavXComType.kMXP_SPI);
     }
 
     @Override
     public void updateInputs(driveIOInputs inputs) {
+
+        for (int i = 0; i < 4; i++) {
+            this.modules[i].updateInputs(moduleInputs[i]);
+        }
+
         inputs.gyroheading = getRotation2d();
         inputs.gyroTurnRate = getTurnRate();
         inputs.moduleStates = getModuleStates();
@@ -50,48 +57,41 @@ public class driveIOHardware implements driveIO {
     }
 
     public SwerveModuleState[] getModuleStates() {
-        return new SwerveModuleState[] {
-                FL.getState(),
-                FR.getState(),
-                BL.getState(),
-                BR.getState()
-        };
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        for (int i = 0; i < 4; i++) {
+            states[i] = moduleInputs[i].moduleState;
+        }
+        return states;
     }
- 
+
     public SwerveModulePosition[] getModulePositions() {
-        return new SwerveModulePosition[] {
-                FL.getPosition(),
-                FR.getPosition(),
-                BL.getPosition(),
-                BR.getPosition()
-        };
+        SwerveModulePosition[] positions = new SwerveModulePosition[4];
+        for (int i = 0; i < 4; i++) {
+            positions[i] = moduleInputs[i].modulePosition;
+        }
+        return positions;
     }
 
     @Override
     public void swerveOutput(SwerveModuleState[] state) {
         SwerveDriveKinematics.desaturateWheelSpeeds(
-                state,
-                DriveConstants.kMaxSpeedMeterPerSecond);
-
-        FL.setDesiredState(state[0]);
-        FR.setDesiredState(state[1]);
-        BL.setDesiredState(state[2]);
-        BR.setDesiredState(state[3]);
+                state, DriveConstants.kMaxSpeedMeterPerSecond);
+        for (int i = 0; i < 4; i++) {
+            modules[i].setModuleState(state[i]);
+        }
     }
 
     @Override
     public void stop() {
-        FL.Stop();
-        FR.Stop();
-        BL.Stop();
-        BR.Stop();
+        for (int i = 0; i < 4; i++) {
+            modules[i].stop();
+        }
     }
 
     @Override
     public void resetEncoders() {
-        FL.resetEncoders();
-        FR.resetEncoders();
-        BL.resetEncoders();
-        BR.resetEncoders();
+        for (int i = 0; i < 4; i++) {
+            modules[i].resetEncoders();
+        }
     }
 }
