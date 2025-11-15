@@ -2,13 +2,12 @@
 
 本專案的主要程式碼皆位於：
 
-
-> *src/main/java/robot
-├── Robot.java
-├── RobotContainer.java
-├── commands/
-├── subsystems/
-└── lib/。*
+src/main/java/robot  
+├── Robot.java  
+├── RobotContainer.java  
+├── commands/  
+├── subsystems/  
+└── lib/  
 
 ---
 
