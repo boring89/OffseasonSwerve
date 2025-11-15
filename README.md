@@ -1,17 +1,54 @@
-本專案的主要程式皆放在：
+# 程式碼位置說明
 
-  src/main/java/robot
-  
-（所有我自己撰寫的機器人控制程式都在這個資料夾裡。）
+本專案的主要程式碼皆位於：
 
-這個資料夾包含：
 
-Robot 主程式（Robot.java）：整個機器人程式的入口
+> *所有我自行撰寫的 FRC 機器人控制程式都集中在這個資料夾中。*
 
-Subsytems 子系統：例如驅動、感測器、機構控制
+---
 
-RobotContainer：管理整體程式的依賴與呼叫流程
+## 目錄內容
 
-Commands 指令：機器人執行的動作邏輯
+### **Robot 主程式 — `Robot.java`**
+負責整個機器人的生命週期（初始化、循環執行、模式切換等）。
 
-lib：機器人函式庫
+---
+
+### **RobotContainer — 程式架構中樞**
+- 建立並管理所有 **Subsystem（子系統）**
+- 設定 **Commands（指令）** 與控制器按鍵
+- 提供自動模式（Autonomous）指令
+- 管理整個程式的依賴與邏輯關係
+
+---
+
+### **Subsystems — 子系統（`subsystems/`）**
+包含機器人的各個功能模組，例如：
+- 驅動底盤
+- 感測器整合
+- 機構控制（Shooter / Intake / Arm 等）
+
+---
+
+### **Commands — 指令（`commands/`）**
+定義機器人可執行的動作邏輯，例如：
+- 自動對準
+- 行駛路徑
+- 機構操作
+
+---
+
+### **lib — 自訂函式庫（`lib/`）**
+放置共用工具、常數、運算方法與輔助程式。
+
+---
+
+## 專案樹狀結構
+
+src/main/java/robot
+├── Robot.java
+├── RobotContainer.java
+├── commands/
+├── subsystems/
+└── lib/
+
