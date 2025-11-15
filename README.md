@@ -3,7 +3,12 @@
 本專案的主要程式碼皆位於：
 
 
-> *所有我自行撰寫的 FRC 機器人控制程式都集中在這個資料夾中。*
+> *src/main/java/robot
+├── Robot.java
+├── RobotContainer.java
+├── commands/
+├── subsystems/
+└── lib/。*
 
 ---
 
@@ -45,10 +50,5 @@
 
 ## 專案樹狀結構
 
-src/main/java/robot
-├── Robot.java
-├── RobotContainer.java
-├── commands/
-├── subsystems/
-└── lib/
+
 
